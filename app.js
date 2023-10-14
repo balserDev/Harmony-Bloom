@@ -1,4 +1,5 @@
 import express from 'express'
+import { Calendar, generateCalendars } from './public/scripts/calendar.js';
 
 
 const app = express();
@@ -11,5 +12,9 @@ app.listen(port, (req, res)=>{
 })
 
 app.get('/', (req, res)=>{
-    res.render('main.ejs')
+
+    const myCalendars = generateCalendars(2023);
+    console.log(myCalendars[0].getMonthName());
+
+    res.render('main.ejs', {calendars:myCalendars})
 })
