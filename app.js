@@ -14,7 +14,10 @@ app.listen(port, (req, res)=>{
 app.get('/', (req, res)=>{
 
     const myCalendars = generateCalendars(2023);
-    console.log(myCalendars[0].getMonthName());
+    let currentMonth = (new Date().getMonth()) + 1;
 
-    res.render('main.ejs', {calendars:myCalendars})
+    res.render('main.ejs', {
+        calendars:myCalendars,
+        Month:currentMonth
+    })
 })
