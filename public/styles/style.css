@@ -104,6 +104,7 @@ footer{
     height: 40vh;
     width: 55vh;
     font-size: 1rem;
+    transition-property: height, width;
     transition-duration: 0.5s;
 }
 .calendar:hover{
@@ -120,6 +121,7 @@ footer{
     margin: auto;
     align-items: center;
     justify-content: center;
+    transition-property: height, width;
     transition-duration: 0.2s;
 }
 
@@ -159,7 +161,9 @@ footer{
     position: absolute;
     display: flex;
     flex-direction: column;
-
+    transition-property: transform;
+    transition-duration: 0.5s;
+    
 }
 
 .curve{
