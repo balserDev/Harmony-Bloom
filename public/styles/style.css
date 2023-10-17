@@ -53,6 +53,17 @@ footer{
     background-color: rgb(158, 77, 77);
 }
 
+#calendars{
+    display: flex;
+    align-items: center;
+}
+
+#calendars li{
+    display: inline-block;
+    list-style: none;
+    transition-duration: 2s;
+}
+
 .text{
     color: white;
 }
@@ -90,14 +101,14 @@ footer{
     margin-left: 20px;
     margin-right: 20px;
     border-radius: 10px;
-    height: 50vh;
-    width: 70vh;
+    height: 40vh;
+    width: 55vh;
     font-size: 1rem;
     transition-duration: 0.5s;
 }
 .calendar:hover{
-    height: 52vh;
-    width: 72vh;
+    height: 45vh;
+    width: 60vh;
 }
 
 .day{
@@ -128,11 +139,27 @@ footer{
     width: 35vh;
     font-size: 0.5rem;
     opacity: 0.5;
+    
+}
+.side_left{
+
+    transform: translate(-600px, 0);
+}
+.side_right{
+    transform: translate(600px, 0);
+    
 }
 
 .sideText{
     font-size: 10px;
     opacity: 0.5;
+}
+
+.selector{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+
 }
 
 .curve{
@@ -160,3 +187,14 @@ footer{
     margin-top: 50px;
     text-align: center;
 }
+
+.carousel .carousel-item{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    user-select: none;
+    
+    
+}
+

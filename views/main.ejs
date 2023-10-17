@@ -24,6 +24,19 @@
     </div>
     
     <div class="CalendarContainer">
+
+            <%for(var i=0; i < calendars.length; i++){%>
+                <% var ids = i.toString() %>
+                <div class="selector" id=<%= ids %>>
+                    <h1 class="monthName"><%= calendars[i].getMonthName() %></h1>
+                    <div class="calendar">
+                        <% for(var x = 1; x <= calendars[i].getMonthDays(); x++){ %>
+                            <div class="day"><%= x %></div>    
+                        <%}%>
+                    </div>
+                </div>
+            <%}%>
+<!-- 
         <div class="selector">
             <h1 class="monthName sideText"><%= calendars[9].getMonthName() %></h1>
             <div class="calendar side">
@@ -48,7 +61,7 @@
                     <div class="day"><%= i %></div>    
                 <%}%>
             </div>
-        </div>
+        </div> -->
     </div>
 
     <h1 class="title">Average Duration</h1>
