@@ -10,18 +10,23 @@ const port = 3000;
 const myCalendars = generateCalendars(2023);
 const currentMonth = (new Date().getMonth()) + 1;
 
+var USEREMAIL = '';
+var marks = {};
 
 await mongoose.connect("mongodb://127.0.0.1:27017/HarmonyBloom")
 
 const userSchema = new mongoose.Schema({
     username: String,
     email: String,
-    password: String
+    password: String,
+    data : Map
 })
 const userData=  mongoose.model("users", userSchema);
 
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json({limit:'5mb'}))
 app.use(express.static("public"))
+
 
 app.listen(port, (req, res)=>{
     console.log(`The server has started at the port ${port}`)
@@ -54,13 +59,33 @@ app.post('/login', (req, res) =>{
     const userEmail = req.body.email;
     const userPassword = req.body.password;
     userData.findOne({email:userEmail})
+    
     .then( found =>{
         if(found){
-            if(found.password){
-                res.render('main.ejs', {
-                    calendars:myCalendars,
-                    Month:currentMonth
+          
+            if(found.password == userPassword){
+                
+                USEREMAIL = userEmail;
+
+                userData.findOne({email:userEmail})
+                .then(f=>{
+                    marks = f.data;
+                    console.log(marks);
+                    
+                    var data = JSON.stringify(marks);
+                    res.render('main.ejs', {
+                        calendars:myCalendars,
+                        Month:currentMonth,
+                        userName : found.username,
+                        jsonData: data
                 })
+                })
+
+               // myData = JSON.stringify(marks);
+
+           
+                
+
             }else{
                
                 res.render('login.ejs', {error:"worng password or email"});
@@ -86,7 +111,8 @@ app.post('/register', (req, res) =>{
     const user = new userData({
         username: username,
         email: email,
-        password: password
+        password: password,
+        data : {}
     })
 
     console.log('user');
@@ -94,7 +120,8 @@ app.post('/register', (req, res) =>{
     .then(item => {
         res.render('main.ejs', {
             calendars:myCalendars,
-            Month:currentMonth
+            Month:currentMonth,
+            userName : username
         })
       })
       .catch(err => {
@@ -103,6 +130,21 @@ app.post('/register', (req, res) =>{
 })
     
 
+app.post('/user-data', (req, res)=>{
 
+    console.log('I got a request');
+    console.log(req.body);
+
+    var markeddays = req.body
+
+    userData.updateOne({email:USEREMAIL}, { data: markeddays})
+    .then(found =>{
+        console.log('succes')
+    })
+    .catch(err => {
+        res.status(400).send("unable to save to database");
+    });
+
+})
 
 
