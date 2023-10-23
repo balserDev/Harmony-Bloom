@@ -4,7 +4,7 @@ $(document).ready(setTimeout(function(){
     const todaysMonth = new Date().getMonth() + 1;
     
     
-    var markdays = {0:[], 1:[], 2:[], 3:[], 4:[], 5:[],
+    var markdays = {0:[], 1:[3,4,5,8,9,10], 2:[], 3:[], 4:[], 5:[],
         6:[], 7:[], 8:[], 9:[], 10:[1,5,10], 11:[]}
     
     markdays = JSON.parse(testr);
@@ -22,6 +22,46 @@ $(document).ready(setTimeout(function(){
     }
     
     console.log(markdays);
+
+    function setData(){
+        var cycles = []
+
+        for(let i =0; i<keys.length; i++){
+            var saveCycle = [];
+            var count = 0;
+            for(let a = 0; a<markdays[i].length; a++){
+                console.log(`${saveCycle} vs ${markdays[i][a]}`)
+                if(saveCycle.length === 0){
+                    saveCycle.push(markdays[i][a]);
+                }else if(a < (markdays[i].length - count)){
+                    console.log(`${a} and my old ${markdays[i].length - count}`)
+                    if(markdays[i][a] === (markdays[i][a - 1] + 1)){
+                        saveCycle.push(markdays[i][a]);
+                    }else{
+                        cycles.push(saveCycle);
+                        saveCycle = [];
+                        count++;
+                        a--;
+                    }
+                }else if (a === (markdays[i].length - count)){
+                    saveCycle.push(markdays[i][a]);
+                    cycles.push(saveCycle);
+                }
+            }
+        }
+        
+        var totalLength = 0
+        for(let i=0; i<cycles.length; i++){
+           totalLength += cycles[i].length;
+        }
+
+        let averageCycleDuration = totalLength/cycles.length;
+
+        $('#avrDuration').html(`Average Duration: ${averageCycleDuration} days`);
+        $('#totalLogedDays').html(`Total Loged Days: ${totalLength}`);
+
+        return cycles.length
+    }
     
     function setCalendars(main){
         var months = $('.selector');
@@ -43,6 +83,7 @@ $(document).ready(setTimeout(function(){
     }
     
     setCalendars(todaysMonth);
+    console.log(`total cycles ${setData()}`);
     
     $('.day').click(function(){
         var markedDay = parseInt($(this).html());
