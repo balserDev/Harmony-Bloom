@@ -282,3 +282,31 @@ footer{
 .selected{
     background-color:#BB4F4F;
 }
+
+.graphContainer{
+    width: 1000px;
+    height: 300px;
+    background-color: white;
+    border-radius: 10px;
+    margin-bottom: 50px;
+}
+
+.bar{
+    fill: #BB4F4F;
+}
+
+.intersection{
+    fill: none;
+    stroke: #6b3131;
+    stroke-width: 5;
+}
+
+.next{
+    background-color: rgb(250, 158, 83);
+    color: white;
+}
+
+.graphics{
+    background-color: #6b3131;
+}
+

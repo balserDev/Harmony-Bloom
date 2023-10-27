@@ -13,22 +13,114 @@ $(document).ready(setTimeout(function(){
     
     
     const keys = Object.keys(markdays);
+    let markedMonths = [];
+
     for(let i = 0; i<keys.length; i++){
+        if(markdays[i].length > 0 ){
+            markedMonths.push(i)
+        }
         for(let a = 0; a<markdays[i].length; a++){
             var objectTo = markdays[i][a]
             $(`#${i} .${objectTo}`).addClass('selected');
-            
+           
         }
     }
     
     console.log(markdays);
 
+    function drawDurationGraph(data){
+
+        let topGraph = 20
+        let topControll = []
+        for(let a=0; a<data.length; a++){
+            topControll.push(data[a].duration);
+        }
+        topControll.sort(function(a, b) {
+            return a - b;
+        });
+        console.log('Graph ' + topControll);
+        topGraph = (topControll[topControll.length - 1] + 2);
+        
+
+        const xScale = d3
+            .scaleBand()
+            .domain(data.map((dataPoint) => dataPoint.cycle))
+            .rangeRound([0, 1000])
+            .padding(0.4);
+        const YScale = d3
+            .scaleLinear()
+            .domain([0, topGraph])
+            .range([300,0]);
+
+
+        const container = d3.select('.durationGraph')
+            .classed('graphContainer', true);
+
+        //var pathSelection = d3.select('.intersection').attr('d')
+        const bars = container
+            .selectAll('.bar')
+            .data(data)
+            .enter()
+            .append('circle')
+            .classed('bar', true)
+            .text(data => data.cycle)
+            .attr('r', (xScale.bandwidth() - topGraph * 10))
+           // .attr('height', (data) => 500 - YScale(data.duration))
+            .attr('cx', data =>xScale(data.cycle))
+            .attr('cy', data =>YScale(data.duration))
+        
+        var points = $('.bar');
+        let path = ' '
+        console.log(points)
+        for(let i =0; i < points.length; i++ ){
+            let point = points[i];
+            let x = $(point).attr('cx');
+            let y = $(point).attr('cy');
+            if(path === ' '){
+                path += `M ${x},${y} `
+            }else{
+                path += `L ${x},${y} `
+            }
+            
+        }
+        console.log("Test " + path);
+        $('.intersection').attr('d', path);
+    }
+
+
     function setData(){
         var cycles = []
+        var durationChart = []
+
+
+        var MonthMark = markedMonths[markedMonths.length-1];
+        var lastMarkedMonth = markdays[markedMonths[markedMonths.length-1]];
+        var lastDayMarked = lastMarkedMonth[lastMarkedMonth.length-1];
+
+        var lastMarkedDayTotal = new Date(2023, MonthMark, 0).getDate();
+        let monthDiference = lastMarkedDayTotal - lastDayMarked;
+        console.log(`last marked month ${MonthMark}`)
+        console.log(`last month:${MonthMark} last day ${lastDayMarked}, ${lastMarkedDayTotal - lastDayMarked} till the end of the month`);
+        
+        if(monthDiference >= 28){
+            //Do soemthing if in range
+        }else{
+            var nextMonth = MonthMark + 1;
+            var expectedDate = 28 - monthDiference;
+            var expectedTotalTime = monthDiference + expectedDate
+
+            console.log(`expected Date Booyyyyy month:${nextMonth} and day ${expectedDate}`)
+            $(`#${nextMonth}`).children('.calendar').children(`.${expectedDate}`).addClass('next');;
+            $('#nextCycle').html(`Next Cycle in: ${expectedTotalTime} days`);
+            //out of range go to next month
+        }
 
         for(let i =0; i<keys.length; i++){
             var saveCycle = [];
             var count = 0;
+            markdays[i].sort(function(a, b) {
+                return a - b;
+            });
             for(let a = 0; a<markdays[i].length; a++){
                 console.log(`${saveCycle} vs ${markdays[i][a]}`)
                 if(saveCycle.length === 0){
@@ -51,14 +143,21 @@ $(document).ready(setTimeout(function(){
         }
         
         var totalLength = 0
+
         for(let i=0; i<cycles.length; i++){
            totalLength += cycles[i].length;
+           var durationData = {'cycle':(i+1), 'duration':cycles[i].length}
+           durationChart.push(durationData);
         }
 
-        let averageCycleDuration = totalLength/cycles.length;
+        let averageCycleDuration = Math.round(totalLength/cycles.length);
+
+        drawDurationGraph(durationChart);
 
         $('#avrDuration').html(`Average Duration: ${averageCycleDuration} days`);
         $('#totalLogedDays').html(`Total Loged Days: ${totalLength}`);
+
+
 
         return cycles.length
     }
