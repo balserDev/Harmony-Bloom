@@ -112,17 +112,14 @@ app.post('/register', (req, res) =>{
         username: username,
         email: email,
         password: password,
-        data : {}
+        data : {0:[], 1:[], 2:[], 3:[], 4:[], 5:[],
+            6:[], 7:[], 8:[], 9:[], 10:[], 11:[]}
     })
 
     console.log('user');
     user.save()
     .then(item => {
-        res.render('main.ejs', {
-            calendars:myCalendars,
-            Month:currentMonth,
-            userName : username
-        })
+        res.render('login.ejs')
       })
       .catch(err => {
         res.status(400).send("unable to save to database");
@@ -140,6 +137,7 @@ app.post('/user-data', (req, res)=>{
     userData.updateOne({email:USEREMAIL}, { data: markeddays})
     .then(found =>{
         console.log('succes')
+        res.redirect(req.originalUrl)
     })
     .catch(err => {
         res.status(400).send("unable to save to database");

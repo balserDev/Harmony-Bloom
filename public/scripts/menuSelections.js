@@ -1,15 +1,14 @@
 
 $(document).ready(setTimeout(function(){
+
     console.log(testr);
     const todaysMonth = new Date().getMonth() + 1;
     
     
-    var markdays = {0:[], 1:[3,4,5,8,9,10], 2:[], 3:[], 4:[], 5:[],
-        6:[], 7:[], 8:[], 9:[], 10:[1,5,10], 11:[]}
-    
-    markdays = JSON.parse(testr);
-    console.log(markdays)
-    //markdays = testr;
+    var markdays = {0:[], 1:[], 2:[], 3:[], 4:[], 5:[],
+        6:[], 7:[], 8:[], 9:[], 10:[], 11:[]}
+        markdays = JSON.parse(testr);
+        console.log(markdays)
     
     
     const keys = Object.keys(markdays);
@@ -64,7 +63,7 @@ $(document).ready(setTimeout(function(){
             .append('circle')
             .classed('bar', true)
             .text(data => data.cycle)
-            .attr('r', (xScale.bandwidth() - topGraph * 10))
+            .attr('r', topGraph * 2)
            // .attr('height', (data) => 500 - YScale(data.duration))
             .attr('cx', data =>xScale(data.cycle))
             .attr('cy', data =>YScale(data.duration))
@@ -92,74 +91,110 @@ $(document).ready(setTimeout(function(){
         var cycles = []
         var durationChart = []
 
+        if(markedMonths.length >= 1){
+            var MonthMark = markedMonths[markedMonths.length-1];
+            var lastMarkedMonth = markdays[markedMonths[markedMonths.length-1]];
+            var lastDayMarked = lastMarkedMonth[lastMarkedMonth.length-1];
+    
+            var lastMarkedDayTotal = new Date(2023, MonthMark, 0).getDate();
+            let monthDiference = lastMarkedDayTotal - lastDayMarked;
+            console.log(`last marked month ${MonthMark}`)
+            console.log(`last month:${MonthMark} last day ${lastDayMarked}, ${lastMarkedDayTotal - lastDayMarked} till the end of the month`);
+            
+            
+            for(let i =0; i<keys.length; i++){
+                var saveCycle = [];
+                var monthArray = markdays[i];
+                monthArray.sort(function(a, b) {
+                    return a - b;
+                });
 
-        var MonthMark = markedMonths[markedMonths.length-1];
-        var lastMarkedMonth = markdays[markedMonths[markedMonths.length-1]];
-        var lastDayMarked = lastMarkedMonth[lastMarkedMonth.length-1];
+                for(let a = 0; a<monthArray.length; a++){
+                    console.log(`${saveCycle} vs ${monthArray[a]}`)
 
-        var lastMarkedDayTotal = new Date(2023, MonthMark, 0).getDate();
-        let monthDiference = lastMarkedDayTotal - lastDayMarked;
-        console.log(`last marked month ${MonthMark}`)
-        console.log(`last month:${MonthMark} last day ${lastDayMarked}, ${lastMarkedDayTotal - lastDayMarked} till the end of the month`);
-        
-        if(monthDiference >= 28){
-            //Do soemthing if in range
-        }else{
-            var nextMonth = MonthMark + 1;
-            var expectedDate = 28 - monthDiference;
-            var expectedTotalTime = monthDiference + expectedDate
+                    if(saveCycle.length === 0){
+                        saveCycle.push(monthArray[a]);
 
-            console.log(`expected Date Booyyyyy month:${nextMonth} and day ${expectedDate}`)
-            $(`#${nextMonth}`).children('.calendar').children(`.${expectedDate}`).addClass('next');;
-            $('#nextCycle').html(`Next Cycle in: ${expectedTotalTime} days`);
-            //out of range go to next month
-        }
+                    }else if((a + 1) < (monthArray.length - count)){
+                        console.log(`${a} and my old ${monthArray.length - count}`)
 
-        for(let i =0; i<keys.length; i++){
-            var saveCycle = [];
-            var count = 0;
-            markdays[i].sort(function(a, b) {
-                return a - b;
-            });
-            for(let a = 0; a<markdays[i].length; a++){
-                console.log(`${saveCycle} vs ${markdays[i][a]}`)
-                if(saveCycle.length === 0){
-                    saveCycle.push(markdays[i][a]);
-                }else if(a < (markdays[i].length - count)){
-                    console.log(`${a} and my old ${markdays[i].length - count}`)
-                    if(markdays[i][a] === (markdays[i][a - 1] + 1)){
-                        saveCycle.push(markdays[i][a]);
-                    }else{
+                        if(monthArray[a] === (monthArray[a - 1] + 1)){
+                            saveCycle.push(monthArray[a]);
+                            console.log(monthArray[a]  + " stored")
+                        }else{
+                            cycles.push(saveCycle);
+                            console.log(saveCycle + " stored cycle")
+                            saveCycle = [];
+                            a--;
+                        }
+
+                    }else if ((a+1) === (monthArray.length)){
+                        saveCycle.push(monthArray[a]);
                         cycles.push(saveCycle);
-                        saveCycle = [];
-                        count++;
-                        a--;
                     }
-                }else if (a === (markdays[i].length - count)){
-                    saveCycle.push(markdays[i][a]);
-                    cycles.push(saveCycle);
                 }
             }
+            
+            var totalLength = 0
+    
+            for(let i=0; i<cycles.length; i++){
+               totalLength += cycles[i].length;
+               var durationData = {'cycle':(i+1), 'duration':cycles[i].length}
+               durationChart.push(durationData);
+            }
+    
+            let averageCycleDuration = Math.round(totalLength/cycles.length);
+    
+            drawDurationGraph(durationChart);
+            
+            console.log("fornite " + totalLength);
+            console.log("fornite " + cycles);
+
+            $('#avrDuration').html(`Average Duration: ${averageCycleDuration} days`);
+            $('#totalLogedDays').html(`Total Loged Days: ${totalLength}`);
+            
+            
+            var todaysDay = new Date().getDate();
+            if(monthDiference >= 28){
+                var expectedDatehere = lastDayMarked + 28;
+                var expectedTotalTime = monthDiference + expectedDate
+                let controll = 0
+                for(let b=0; b< averageCycleDuration; b++){
+                    
+                    console.log("Mokey Po " + lastMarkedDayTotal +" "+expectedDatehere)
+                    if((expectedDatehere + b) > expectedDatehere){
+                        console.log('pipo')
+                        $(`#${MonthMark + 1}`).children('.calendar').children(`.${1 + controll}`).addClass('next');;
+                        controll ++;
+                    }else{
+                        console.log('pupi')
+                        $(`#${MonthMark}`).children('.calendar').children(`.${expectedDatehere + b}`).addClass('next');;
+                    }
+                    
+                }
+                
+                let daysLeft = expectedDatehere - todaysDay;
+                $('#nextCycle').html(`Next Cycle in: ${daysLeft} days`);
+
+            }else{
+                var nextMonth = MonthMark + 1;
+                var expectedDate = 28 - monthDiference;
+                var expectedTotalTime = monthDiference + expectedDate
+                
+                for(let b=0; b< averageCycleDuration; b++){
+                    $(`#${nextMonth}`).children('.calendar').children(`.${expectedDate + b}`).addClass('next');;
+                }
+
+                let daysLeft = (expectedDate + monthDiference);
+                $('#nextCycle').html(`Next Cycle in: ${daysLeft} days`);
+
+           
+            }
+            return cycles
+        }else{
+            return "NO LOGS"
         }
-        
-        var totalLength = 0
-
-        for(let i=0; i<cycles.length; i++){
-           totalLength += cycles[i].length;
-           var durationData = {'cycle':(i+1), 'duration':cycles[i].length}
-           durationChart.push(durationData);
-        }
-
-        let averageCycleDuration = Math.round(totalLength/cycles.length);
-
-        drawDurationGraph(durationChart);
-
-        $('#avrDuration').html(`Average Duration: ${averageCycleDuration} days`);
-        $('#totalLogedDays').html(`Total Loged Days: ${totalLength}`);
-
-
-
-        return cycles.length
+      
     }
     
     function setCalendars(main){
@@ -182,6 +217,8 @@ $(document).ready(setTimeout(function(){
     }
     
     setCalendars(todaysMonth);
+
+
     console.log(`total cycles ${setData()}`);
     
     $('.day').click(function(){

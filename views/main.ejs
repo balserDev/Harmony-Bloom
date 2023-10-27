@@ -15,9 +15,9 @@
         <nav>
             <div class="logo text">Harmony Bloom</div>
             <ul>
-                <li><a class="text">Home</a></li>
-                <li><a class="text">About Us</a></li>
-                <li><a class="text">Help</a></li>
+                <li><a href="/" class="text">Home</a></li>
+                <li><a href="/about" class="text">About Us</a></li>
+                <li><a href="/help" class="text">Help</a></li>
                 <li><div class="text"><%= userName %>'s Acount</div></li>
             </ul>
         </nav>
@@ -45,9 +45,9 @@
 
     </div>
     <div class="data" style="height: 50px;">
-        <h1 class="title" id="avrDuration">Average Duration: </h1>
-        <h1 class="title" id="totalLogedDays">Total loged days: </h1>
-        <h1 class="title" id="nextCycle">Next cycle in: </h1>
+        <h1 class="title" id="avrDuration">Average Duration: No data</h1>
+        <h1 class="title" id="totalLogedDays">Total loged days: No data</h1>
+        <h1 class="title" id="nextCycle">Next cycle in: No data</h1>
 
       
     </div>
@@ -67,11 +67,27 @@
         </svg>
     </div>
 
-
+    <div class="footer">
+        <h1>By Mateo Valencia</h1>
+        <div style="display: flex;">
+            <a href="https://github.com/balserDev" style="text-decoration: none; margin-right: 30px;">
+                <ul style="list-style: none; align-items: center; display: flex; flex-direction: column;">
+                    <li><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/GitHub_Invertocat_Logo.svg/200px-GitHub_Invertocat_Logo.svg.png" style="width: 80px; height: 80px; filter: invert(30%); mix-blend-mode: multiply;"></li>
+                    <li><h1>BalserDev</h1></li>
+                </ul>
+            </a>
+            <a href="https://www.linkedin.com/in/mateo-valencia-otalvaro-3207b2222/" style="text-decoration: none;">
+                <ul style="list-style: none; align-items: center; display: flex; flex-direction: column;">
+                    <li><img src="https://pbs.twimg.com/profile_images/1661161645857710081/6WtDIesg_400x400.png" style="width: 80px; height: 80px; filter: grayscale(100%); mix-blend-mode: multiply;"></li>
+                    <li><h1>Mateo Valencia Otalvaro</h1></li>
+                </ul>
+            </a>
+        </div>
+        
+        
+    </div>
     
-
     <% var pep = jsonData %>
-    
     <script>var testr = '<%-pep%>';</script>
 
     <script src="https://d3js.org/d3.v5.min.js"></script>

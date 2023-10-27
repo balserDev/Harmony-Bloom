@@ -310,3 +310,13 @@ footer{
     background-color: #6b3131;
 }
 
+.footer{
+    height: 200px;
+    width: 100%;
+    margin: 0;
+    background-color: #BB4F4F;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    font-size: 8px;
+}
