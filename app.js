@@ -54,6 +54,13 @@ app.get('/sing-up', (req, res)=>{
     res.render('register.ejs');
 })
 
+app.get('/help', (req,res)=>{
+    res.send('help here')
+})
+app.get('/about', (req,res)=>{
+    res.render('about.ejs');
+})
+
 
 app.post('/login', (req, res) =>{
     const userEmail = req.body.email;
@@ -108,22 +115,31 @@ app.post('/register', (req, res) =>{
     const password = req.body.password;
     const email = req.body.email;
 
-    const user = new userData({
-        username: username,
-        email: email,
-        password: password,
-        data : {0:[], 1:[], 2:[], 3:[], 4:[], 5:[],
-            6:[], 7:[], 8:[], 9:[], 10:[], 11:[]}
+    userData.findOne({email:email})
+    .then(found =>{
+        if(found){
+            res.render('register.ejs', {error: "Error email allready in use"})
+        }
+        else{
+            const user = new userData({
+                username: username,
+                email: email,
+                password: password,
+                data : {0:[], 1:[], 2:[], 3:[], 4:[], 5:[],
+                    6:[], 7:[], 8:[], 9:[], 10:[], 11:[]}
+            })
+        
+            console.log('user');
+            user.save()
+            .then(item => {
+                res.render('login.ejs')
+              })
+              .catch(err => {
+                res.status(400).send("unable to save to database");
+              });
+        }
     })
-
-    console.log('user');
-    user.save()
-    .then(item => {
-        res.render('login.ejs')
-      })
-      .catch(err => {
-        res.status(400).send("unable to save to database");
-      });
+   
 })
     
 

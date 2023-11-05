@@ -9,12 +9,11 @@
 <body>
     <div class="header">
         <nav>
-            <div class="logo text">Harmony Bloom</div>
+            <div class="logo text" style="text-align: center;">Harmony Bloom</div>
             <ul>
                 <li><a class="text">Home</a></li>
-                <li><a class="text">About Us</a></li>
+                <li><a href="/about" class="text">About Us</a></li>
                 <li><a class="text">Help</a></li>
-                <li><div class="text">My Acount</div></li>
             </ul>
         </nav>
     </div>
@@ -29,13 +28,32 @@
             <% } %>
            
             <form action="/login" class="nonStyleForm loginForm" method="POST">
-                <input type="email" placeholder="e-mail" name="email">
-                <input type="password" placeholder="password" name="password">
-                <input type="submit" placeholder="enter" id="enter" value="loge in">
+                <input type="email" placeholder="e-mail" name="email" style="border-radius: 10px; border: none; box-shadow: 0px 2px 3px black;">
+                <input type="password" placeholder="password" name="password" style="border-radius: 10px; border: none; box-shadow: 0px 2px 3px black;">
+                <input type="submit" placeholder="enter" id="enter" value="loge in" style="box-shadow: 0px 2px 3px black;">
             </form>
-            <a href="/sing-up">Don't have an account?</a>
+            <a href="/sing-up" style="color: white;">Don't have an account?</a>
         </div>
     </div>
     
+    <div class="footer" style="margin-top: 130px;">
+        <h1>By Mateo Valencia</h1>
+        <div style="display: flex;">
+            <a href="https://github.com/balserDev" style="text-decoration: none; margin-right: 30px;">
+                <ul style="list-style: none; align-items: center; display: flex; flex-direction: column;">
+                    <li><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/GitHub_Invertocat_Logo.svg/200px-GitHub_Invertocat_Logo.svg.png" style="width: 80px; height: 80px; filter: invert(30%); mix-blend-mode: multiply;"></li>
+                    <li><h1>BalserDev</h1></li>
+                </ul>
+            </a>
+            <a href="https://www.linkedin.com/in/mateo-valencia-otalvaro-3207b2222/" style="text-decoration: none;">
+                <ul style="list-style: none; align-items: center; display: flex; flex-direction: column;">
+                    <li><img src="https://pbs.twimg.com/profile_images/1661161645857710081/6WtDIesg_400x400.png" style="width: 80px; height: 80px; filter: grayscale(100%); mix-blend-mode: multiply;"></li>
+                    <li><h1>Mateo Valencia Otalvaro</h1></li>
+                </ul>
+            </a>
+        </div>
+        
+        
+    </div>
 </body>
 </html>

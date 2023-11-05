@@ -7,6 +7,13 @@
     <title>Harmony Bloom</title>
 </head>
 <body>
+    <style>
+        input{
+            border-radius: 10px;
+            border: none;
+            box-shadow: 0px 2px 3px black;
+        }
+    </style>
     <div class="header">
         <nav>
             <div class="logo text">Harmony Bloom</div>
@@ -23,6 +30,11 @@
         <div class="login">
             
             <h1 id="welcome">Get Ready</h1>
+
+            <% if(locals.error){ %>
+                <h1 id="error"><%= error %></h1>
+            <% } %>
+
             <form action="/register" class="nonStyleForm loginForm" method="POST">
                 <input type="text" placeholder="username" name="username">
                 <input type="email" placeholder="email" name="email">

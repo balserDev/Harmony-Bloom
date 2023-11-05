@@ -115,8 +115,8 @@ $(document).ready(setTimeout(function(){
                     if(saveCycle.length === 0){
                         saveCycle.push(monthArray[a]);
 
-                    }else if((a + 1) < (monthArray.length - count)){
-                        console.log(`${a} and my old ${monthArray.length - count}`)
+                    }else if((a + 1) < (monthArray.length)){
+                        console.log(`${a} and my old ${monthArray.length}`)
 
                         if(monthArray[a] === (monthArray[a - 1] + 1)){
                             saveCycle.push(monthArray[a]);
