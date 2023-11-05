@@ -2,7 +2,7 @@ import express from 'express'
 import { Calendar, generateCalendars } from './public/scripts/calendar.js';
 import bodyParser from "body-parser";
 import mongoose from 'mongoose';
-
+import 'dotenv/config'
 
 const app = express();
 const port = 3000;
@@ -13,7 +13,7 @@ const currentMonth = (new Date().getMonth()) + 1;
 var USEREMAIL = '';
 var marks = {};
 
-await mongoose.connect("mongodb+srv://mateo:Valencia_123fiona@cluster0.ufqg3ep.mongodb.net/HarmonyBloom")
+await mongoose.connect(`mongodb+srv://${process.env.DATABASEUSER}${process.env.DATABASEPASSWORD}@cluster0.ufqg3ep.mongodb.net/HarmonyBloom`)
 
 const userSchema = new mongoose.Schema({
     username: String,
