@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="styles/style.css" rel="stylesheet">
+    <title>Harmony Bloom</title>
+</head>
+<body>
+    <style>
+        input{
+            border-radius: 10px;
+            border: none;
+            box-shadow: 0px 2px 3px black;
+        }
+    </style>
+    <div class="header">
+        <nav>
+            <div class="logo text">Harmony Bloom</div>
+            <ul>
+                <li><a class="text">Home</a></li>
+                <li><a class="text">About Us</a></li>
+                <li><a class="text">Help</a></li>
+                <li><div class="text">My Acount</div></li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="loginContainer">
+        <div class="login">
+            
+            <h1 id="welcome">Get Ready</h1>
+
+            <% if(locals.error){ %>
+                <h1 id="error"><%= error %></h1>
+            <% } %>
+
+            <form action="/register" class="nonStyleForm loginForm" method="POST">
+                <input type="text" placeholder="username" name="username">
+                <input type="email" placeholder="email" name="email">
+                <input type="password" placeholder="password" name="password">
+                <input type="password" placeholder="repeat password" name="repeat">
+                <input type="submit" placeholder="enter" id="enter" value="Sing up">
+            </form>
+            <a href="/sing-up"></a>
+        </div>
+    </div>
+    
+</body>
+</html>

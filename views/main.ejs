@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="styles/style.css" rel="stylesheet">
-
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans&family=Quicksand&display=swap" rel="stylesheet">
     <title>Harmony Bloom</title>
 
@@ -14,26 +15,83 @@
         <nav>
             <div class="logo text">Harmony Bloom</div>
             <ul>
-                <li><a class="text">Home</a></li>
-                <li><a class="text">About Us</a></li>
-                <li><a class="text">Help</a></li>
-                <li><div class="text">My Acount</div></li>
+                <li><a href="/" class="text">Home</a></li>
+                <li><a href="/about" class="text">About Us</a></li>
+                <li><a href="/help" class="text">Help</a></li>
+                <li><div class="text"><%= userName %>'s Acount</div></li>
             </ul>
         </nav>
     </div>
+    
     <div class="CalendarContainer">
-        <div class="calendar">
-            <div class="day"></div>
-            <div class="day"></div>
-            <div class="day"></div>
-            <div class="day"></div>
-            <div class="day"></div>
-            <div class="day"></div>
-            <div class="day"></div>
-            <div class="day"></div>
-            <div class="day"></div>
-       </div>
+
+        <%for(var i=0; i < calendars.length; i++){%>
+            <% var ids = i.toString() %>
+            <div class="selector" id=<%= ids %>>
+                <h1 class="monthName"><%= calendars[i].getMonthName() %></h1>
+                <div class="calendar">
+                    <% for(var x = 1; x <= calendars[i].getMonthDays(); x++){ %>
+                        <div class="day <%= x %>"><%= x %></div>    
+                    <%}%>
+                </div>
+            </div>
+        <%}%>
+    </div>
+
+    <div class="editcoantiner center">
+        <div class="basebutton" id="log">Save</div>
+    </div>
+
+
+    </div>
+    <div class="data" style="height: 50px;">
+        <h1 class="title" id="avrDuration">Average Duration: No data</h1>
+        <h1 class="title" id="totalLogedDays">Total loged days: No data</h1>
+        <h1 class="title" id="nextCycle">Next cycle in: No data</h1>
+
+      
+    </div>
+
+    </div>
+    <div class="curve">
+        <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
+        </svg>
+    </div>
+
+    
+    <div class="center graphics" style="flex-direction: column;">
+        <h1 style="text-align: center; padding-top: 50px;">Cycle Durations</h1>
+        <svg class="durationGraph">
+            <path class="intersection" d=""></path>
+        </svg>
+    </div>
+
+    <div class="footer">
+        <h1>By Mateo Valencia</h1>
+        <div style="display: flex;">
+            <a href="https://github.com/balserDev" style="text-decoration: none; margin-right: 30px;">
+                <ul style="list-style: none; align-items: center; display: flex; flex-direction: column;">
+                    <li><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/GitHub_Invertocat_Logo.svg/200px-GitHub_Invertocat_Logo.svg.png" style="width: 80px; height: 80px; filter: invert(30%); mix-blend-mode: multiply;"></li>
+                    <li><h1>BalserDev</h1></li>
+                </ul>
+            </a>
+            <a href="https://www.linkedin.com/in/mateo-valencia-otalvaro-3207b2222/" style="text-decoration: none;">
+                <ul style="list-style: none; align-items: center; display: flex; flex-direction: column;">
+                    <li><img src="https://pbs.twimg.com/profile_images/1661161645857710081/6WtDIesg_400x400.png" style="width: 80px; height: 80px; filter: grayscale(100%); mix-blend-mode: multiply;"></li>
+                    <li><h1>Mateo Valencia Otalvaro</h1></li>
+                </ul>
+            </a>
+        </div>
+        
+        
     </div>
     
+    <% var pep = jsonData %>
+    <script>var testr = '<%-pep%>';</script>
+
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="https://d3js.org/d3-scale.v3.min.js"></script>
+    <script src="scripts/menuSelections.js"></script>
 </body>
 </html>
