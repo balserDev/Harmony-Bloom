@@ -3,7 +3,7 @@ $(document).ready(setTimeout(function(){
 
     console.log(testr);
     const todaysMonth = new Date().getMonth() + 1;
-    
+    console.log(todaysMonth + " the mont of today")
     
     var markdays = {0:[], 1:[], 2:[], 3:[], 4:[], 5:[],
         6:[], 7:[], 8:[], 9:[], 10:[], 11:[]}
@@ -101,7 +101,7 @@ $(document).ready(setTimeout(function(){
             console.log(`last marked month ${MonthMark}`)
             console.log(`last month:${MonthMark} last day ${lastDayMarked}, ${lastMarkedDayTotal - lastDayMarked} till the end of the month`);
             
-            
+            // This is the cycle saving system
             for(let i =0; i<keys.length; i++){
                 var saveCycle = [];
                 var monthArray = markdays[i];
@@ -142,7 +142,8 @@ $(document).ready(setTimeout(function(){
                var durationData = {'cycle':(i+1), 'duration':cycles[i].length}
                durationChart.push(durationData);
             }
-    
+            
+            // here some of the data gets display to the user
             let averageCycleDuration = Math.round(totalLength/cycles.length);
     
             drawDurationGraph(durationChart);
@@ -153,21 +154,19 @@ $(document).ready(setTimeout(function(){
             $('#avrDuration').html(`Average Duration: ${averageCycleDuration} days`);
             $('#totalLogedDays').html(`Total Loged Days: ${totalLength}`);
             
-            
+            // This assings the next expected cycles and shows them to the user
             var todaysDay = new Date().getDate();
             if(monthDiference >= 28){
+                // if next cycle is inside the current month
                 var expectedDatehere = lastDayMarked + 28;
                 var expectedTotalTime = monthDiference + expectedDate
                 let controll = 0
                 for(let b=0; b< averageCycleDuration; b++){
                     
-                    console.log("Mokey Po " + lastMarkedDayTotal +" "+expectedDatehere)
                     if((expectedDatehere + b) > expectedDatehere){
-                        console.log('pipo')
                         $(`#${MonthMark + 1}`).children('.calendar').children(`.${1 + controll}`).addClass('next');;
                         controll ++;
                     }else{
-                        console.log('pupi')
                         $(`#${MonthMark}`).children('.calendar').children(`.${expectedDatehere + b}`).addClass('next');;
                     }
                     
@@ -177,13 +176,22 @@ $(document).ready(setTimeout(function(){
                 $('#nextCycle').html(`Next Cycle in: ${daysLeft} days`);
 
             }else{
+                console.log("Marked " + nextMonth)
                 var nextMonth = MonthMark + 1;
                 var expectedDate = 28 - monthDiference;
                 var expectedTotalTime = monthDiference + expectedDate
-                
-                for(let b=0; b< averageCycleDuration; b++){
-                    $(`#${nextMonth}`).children('.calendar').children(`.${expectedDate + b}`).addClass('next');;
+
+                if(nextMonth < 12){
+                    for(let b=0; b< averageCycleDuration; b++){
+                        $(`#${nextMonth}`).children('.calendar').children(`.${expectedDate + b}`).addClass('next');;
+                    }
+                }else{
+                    nextMonth = 0;
+                    for(let b=0; b< averageCycleDuration; b++){
+                        $(`#${nextMonth}`).children('.calendar').children(`.${expectedDate + b}`).addClass('next');;
+                    }
                 }
+               
 
                 let daysLeft = (expectedDate + monthDiference);
                 $('#nextCycle').html(`Next Cycle in: ${daysLeft} days`);
@@ -262,6 +270,7 @@ $(document).ready(setTimeout(function(){
             body: JSON.stringify(markdays),
         }
         fetch('/user-data', options)
+        location.reload();
     })
     
     

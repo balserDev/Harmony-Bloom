@@ -13,7 +13,7 @@ const currentMonth = (new Date().getMonth()) + 1;
 var USEREMAIL = '';
 var marks = {};
 
-await mongoose.connect("mongodb://127.0.0.1:27017/HarmonyBloom")
+await mongoose.connect("mongodb+srv://mateo:Valencia_123fiona@cluster0.ufqg3ep.mongodb.net/HarmonyBloom")
 
 const userSchema = new mongoose.Schema({
     username: String,
@@ -153,7 +153,7 @@ app.post('/user-data', (req, res)=>{
     userData.updateOne({email:USEREMAIL}, { data: markeddays})
     .then(found =>{
         console.log('succes')
-        res.redirect(req.originalUrl)
+       //res.render('login.ejs')
     })
     .catch(err => {
         res.status(400).send("unable to save to database");
