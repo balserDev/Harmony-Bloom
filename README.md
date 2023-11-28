@@ -1,5 +1,5 @@
 # Harmony-Bloom
-Period Tracking Web App
+Period Tracking Web App.
 # Take Controll!
 ## get useful analytics
 ![image](https://github.com/balserDev/Harmony-Bloom/assets/134951579/4a38cf39-dd0f-4066-a4f0-fbb714b51aca)
